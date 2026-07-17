@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prince Media Concept — Media Production House</title>
+<meta name="description" content="Prince Media Concept is a media production house crafting film, photography, brand identity and social content for businesses and creators anywhere in the world.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --purple-deep:#230C3D;
+    --purple:#7A2BD1;
+    --purple-light:#C9A6F5;
+    --grey-dark:#17161B;
+    --grey:#4A4652;
+    --white:#FFFFFF;
+    --off-white:#F7F4FB;
+    --orange:#FF6A2F;
+    --sky:#3FC6E8;
+    --font-display:'Space Grotesk', sans-serif;
+    --font-body:'Manrope', sans-serif;
+    --font-mono:'IBM Plex Mono', monospace;
+    --container: 1200px;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--font-body);
+    color:var(--grey-dark);
+    background:var(--off-white);
+    line-height:1.6;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  ul{list-style:none;}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;}
+  .wrap{max-width:var(--container);margin:0 auto;padding:0 32px;}
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--purple);
+    display:flex;align-items:center;gap:10px;
+    margin-bottom:18px;
+  }
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--orange);box-shadow:0 0 0 3px rgba(255,106,47,.18);flex:none;animation:pulse 1.8s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  h1,h2,h3{font-family:var(--font-display);font-weight:700;letter-spacing:-0.01em;}
+  h2{font-size:clamp(28px,4vw,44px);line-height:1.1;color:var(--grey-dark);}
+  .section-head{max-width:640px;margin-bottom:56px;}
+  .section-head p.desc{font-size:16.5px;color:var(--grey);margin-top:16px;}
+  section{position:relative;padding:100px 0;}
+
+  /* ---------- Reveal on scroll ---------- */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in-view{opacity:1;transform:translateY(0);}
+  .reveal-1{transition-delay:.05s;} .reveal-2{transition-delay:.15s;} .reveal-3{transition-delay:.25s;}
+  .reveal-4{transition-delay:.35s;} .reveal-5{transition-delay:.45s;} .reveal-6{transition-delay:.55s;}
+
+  /* ---------- Nav ---------- */
+  .nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:22px 0;transition:padding .35s ease, background .35s ease, box-shadow .35s ease;}
+  .nav.scrolled{padding:12px 0;background:rgba(23,22,27,.92);backdrop-filter:blur(10px);box-shadow:0 8px 30px rgba(0,0,0,.25);}
+  .nav-inner{max-width:var(--container);margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;}
+  .logo{font-family:var(--font-display);font-weight:700;font-size:25px;letter-spacing:.02em;color:#28ACD4;}
+  .logo span{color:var(--orange); font-size: 30px; font-weight:800}
+  .nav-links{display:flex;align-items:center;gap:34px;}
+  .nav-links a{color:rgba(255,255,255,.82);font-size:14.5px;font-weight:600;position:relative;padding:4px;transition:color .25s ease;}
+  .nav-links a:not(.nav-cta)::after{content:'';position:absolute;left:0;bottom:-2px;width:0;height:2px;background:var(--orange);transition:width .3s ease;}
+  .nav-links a:not(.nav-cta):hover{color:var(--white);}
+  .nav-links a:not(.nav-cta):hover::after{width:100%;}
+  .nav-cta{background:var(--orange);color:var(--white)!important;padding:10px 20px;border-radius:5px;font-size:13.5px!important;}
+  .nav-cta:hover{background:var(--sky);}
+  .hamburger{display:none;flex-direction:column;gap:5px;width:28px;z-index:1100;}
+  .hamburger span{display:block;height:2px;background:var(--white);border-radius:2px;transition:transform .3s ease, opacity .3s ease;}
+  .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .hamburger.open span:nth-child(2){opacity:0;}
+  .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;min-height:100vh;display:flex;align-items:center;
+    background:var(--grey-dark);overflow:hidden;padding-top:120px;
+  }
+  .hero-bg{
+    position:absolute;inset:0;
+    background:url('https://images.unsplash.com/photo-1640043889108-648c3d4d2d94?w=1800&q=80&auto=format&fit=crop') center/cover no-repeat;
+    filter:saturate(1.05);
+  }
+  .hero-overlay{
+    position:absolute;inset:0;
+    background:
+      linear-gradient(100deg, rgba(23,16,35,.96) 10%, rgba(35,12,61,.85) 45%, rgba(122,43,209,.55) 100%);
+  }
+  .shutter-left,.shutter-right{position:absolute;top:0;bottom:0;width:51%;background:var(--grey-dark);z-index:5;transition:transform 1.1s cubic-bezier(.77,0,.18,1);}
+  .shutter-left{left:0;transform:translateX(0);}
+  .shutter-right{right:0;transform:translateX(0);}
+  .shutter-open .shutter-left{transform:translateX(-100%);}
+  .shutter-open .shutter-right{transform:translateX(100%);}
+  .hero-content{position:relative;z-index:2;max-width:var(--container);margin:0 auto;padding:0 32px;width:100%;}
+  .hero-content .eyebrow{color:var(--sky);}
+  .hero-title{font-size:clamp(42px,7.2vw,88px);line-height:.98;color:var(--white);margin-bottom:26px;}
+  .hero-title .line{display:block;overflow:hidden;}
+  .hero-title .line span{display:block;transform:translateY(115%);opacity:0;animation:lineUp .8s cubic-bezier(.2,.8,.2,1) forwards;}
+  .hero-title .line:nth-child(1) span{animation-delay:1.05s;}
+  .hero-title .line:nth-child(2) span{animation-delay:1.2s;}
+  @keyframes lineUp{to{transform:translateY(0);opacity:1;}}
+  .hero-title .accent{color:var(--orange);}
+  .hero-sub{max-width:520px;color:rgba(255,255,255,.82);font-size:17.5px;margin-bottom:38px;opacity:0;animation:fadeUp .8s ease forwards;animation-delay:1.5s;}
+  .hero-ctas{display:flex;gap:16px;flex-wrap:wrap;opacity:0;animation:fadeUp .8s ease forwards;animation-delay:1.7s;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:15px 28px;border-radius:100px;font-weight:700;font-size:15px;transition:transform .25s ease, background .25s ease, color .25s ease, border-color .25s ease;}
+  .btn-primary{background:var(--orange);color:var(--white);}
+  .btn-primary:hover{background:var(--sky);transform:translateY(-2px);}
+  .btn-ghost{border:1.5px solid rgba(255,255,255,.4);color:var(--white);}
+  .btn-ghost:hover{border-color:var(--white);background:rgba(255,255,255,.08);transform:translateY(-2px);}
+
+  /* ---------- Film strip + ticker (signature motif) ---------- */
+  .film-strip{height:26px;background:var(--grey-dark);
+    background-image:radial-gradient(circle at 15px 13px, var(--off-white) 6px, transparent 7px);
+    background-size:34px 26px;background-repeat:repeat-x;background-position:center;}
+  .ticker{background:var(--purple-deep);overflow:hidden;white-space:nowrap;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08);}
+  .ticker-track{display:inline-flex;animation:tickerScroll 28s linear infinite;padding:16px 0;}
+  .ticker-track span{font-family:var(--font-mono);font-size:13.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--white);padding:0 22px;display:inline-flex;align-items:center;gap:22px;}
+  .ticker-track span::after{content:'●';color:var(--orange);font-size:8px;}
+  @keyframes tickerScroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+  /* ---------- About ---------- */
+  .about{background:var(--off-white);}
+  .about-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:64px;align-items:center;}
+  .about-media{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:4/5;box-shadow:0 30px 60px -20px rgba(35,12,61,.35);}
+  .about-media img{width:100%;height:100%;object-fit:cover;}
+  .about-media::after{content:'';position:absolute;inset:0;background:linear-gradient(200deg, rgba(122,43,209,.28), transparent 60%);}
+  .about-tag{position:absolute;left:18px;bottom:18px;background:var(--white);padding:10px 16px;border-radius:12px;font-family:var(--font-mono);font-size:12px;letter-spacing:.05em;box-shadow:0 10px 30px rgba(0,0,0,.15);}
+  .about-text p{color:var(--grey);font-size:16.5px;margin-bottom:18px;max-width:560px;}
+  .pillars{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px;}
+  .pillar{display:flex;align-items:center;gap:10px;background:var(--white);border:1px solid #E7E1F0;padding:12px 18px;border-radius:100px;font-size:14px;font-weight:600;}
+  .pillar .ico{width:9px;height:9px;border-radius:50%;flex:none;}
+  .pillar:nth-child(1) .ico{background:var(--purple);}
+  .pillar:nth-child(2) .ico{background:var(--orange);}
+  .pillar:nth-child(3) .ico{background:var(--sky);}
+
+  /* ---------- Services ---------- */
+  .services{background:var(--grey-dark);}
+  .services .eyebrow{color:var(--sky);}
+  .services h2{color:var(--white);}
+  .services .section-head p.desc{color:rgba(255,255,255,.65);}
+  .service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .service-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:18px;padding:34px 28px;transition:transform .35s ease, background .35s ease, border-color .35s ease;position:relative;overflow:hidden;}
+  .service-card:hover{transform:translateY(-6px);background:rgba(255,255,255,.07);border-color:rgba(255,106,47,.5);}
+  .service-num{font-family:var(--font-mono);font-size:13px;color:var(--orange);letter-spacing:.08em;}
+  .service-icon{width:44px;height:44px;margin:18px 0 20px;color:var(--sky);}
+  .service-card h3{color:var(--white);font-size:20px;margin-bottom:10px;}
+  .service-card p{color:rgba(255,255,255,.62);font-size:14.5px;}
+
+  /* ---------- Work / Portfolio ---------- */
+  .work{background:var(--off-white);}
+  .work-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .work-item{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:3/4;background:var(--grey-dark);}
+  .work-item img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease;}
+  .work-item:hover img{transform:scale(1.07);}
+  .work-caption{position:absolute;inset:auto 0 0 0;padding:20px;background:linear-gradient(0deg, rgba(23,22,27,.92), transparent);}
+  .work-caption span{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.08em;color:var(--sky);text-transform:uppercase;}
+  .work-caption p{color:var(--white);font-weight:700;font-size:16px;margin-top:4px;}
+  .work-note{margin-top:28px;color:var(--grey);font-size:14.5px;font-style:italic;}
+
+  /* ---------- Process ---------- */
+  .process{background:var(--purple-deep);}
+  .process .eyebrow{color:var(--orange);}
+  .process h2{color:var(--white);}
+  .process .section-head p.desc{color:rgba(255,255,255,.68);}
+  .process-row{display:grid;grid-template-columns:repeat(3,1fr);gap:0;position:relative;}
+  .process-row::before{content:'';position:absolute;top:26px;left:8%;right:8%;height:1.5px;background:repeating-linear-gradient(90deg, rgba(255,255,255,.35) 0 10px, transparent 10px 20px);}
+  .process-step{position:relative;padding-top:0;}
+  .process-num{width:54px;height:54px;border-radius:50%;background:var(--white);color:var(--purple-deep);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:18px;position:relative;z-index:2;margin-bottom:22px;}
+  .process-step h3{color:var(--white);font-size:21px;margin-bottom:10px;}
+  .process-step p{color:rgba(255,255,255,.68);font-size:14.5px;max-width:280px;}
+
+  /* ---------- Contact ---------- */
+  .contact{background:var(--off-white);}
+  .contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;}
+  .contact-info h3{font-size:20px;margin-bottom:22px;}
+  .info-row{display:flex;gap:16px;margin-bottom:24px;align-items:flex-start;}
+  .info-ico{width:22px;height:22px;color:var(--purple);flex:none;margin-top:3px;}
+  .info-row a,.info-row p{font-size:15.5px;color:var(--grey-dark);}
+  .info-row span{display:block;font-family:var(--font-mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--grey);margin-bottom:4px;}
+  .social-row{display:flex;gap:12px;margin-top:32px;}
+  .social-row a{width:44px;height:44px;border-radius:50%;background:var(--grey-dark);color:var(--white);display:flex;align-items:center;justify-content:center;transition:background .25s ease, transform .25s ease;}
+  .social-row a:hover{background:var(--orange);transform:translateY(-3px);}
+  .social-row svg{width:19px;height:19px;}
+  .contact-form{background:var(--white);border-radius:20px;padding:40px;box-shadow:0 30px 60px -25px rgba(35,12,61,.25);}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px;}
+  .field{display:flex;flex-direction:column;gap:8px;}
+  .field.full{grid-column:1/-1;}
+  .field label{font-size:12.5px;font-weight:700;letter-spacing:.03em;color:var(--grey-dark);}
+  .field input,.field select,.field textarea{
+    border:1.5px solid #E4DEF0;border-radius:10px;padding:13px 15px;font-family:inherit;font-size:14.5px;
+    background:var(--off-white);transition:border-color .25s ease, box-shadow .25s ease;
+  }
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--purple);box-shadow:0 0 0 4px rgba(122,43,209,.12);}
+  .field textarea{resize:vertical;min-height:110px;}
+  .form-submit{width:100%;padding:16px;border-radius:100px;background:var(--orange);color:var(--white);font-weight:700;font-size:15px;margin-top:6px;transition:background .25s ease, transform .25s ease;}
+  .form-submit:hover{background:var(--purple);transform:translateY(-2px);}
+  .form-note{font-size:12.5px;color:var(--grey);margin-top:12px;}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--grey-dark);color:rgba(255,255,255,.75);padding:60px 0 28px;}
+  .footer-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:36px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.1);}
+  .footer-brand .logo{margin-bottom:14px;}
+  .footer-brand p{max-width:320px;font-size:14.5px;color:rgba(255,255,255,.55);}
+  .footer-links{display:flex;gap:60px;flex-wrap:wrap;}
+  .footer-col h4{font-family:var(--font-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--sky);margin-bottom:16px;}
+  .footer-col a,.footer-col p{display:block;font-size:14.5px;color:rgba(255,255,255,.65);margin-bottom:10px;transition:color .2s ease;}
+  .footer-col a:hover{color:var(--white);}
+  .footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;padding-top:26px;font-size:13px;color:rgba(255,255,255,.4);}
+  .back-top{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;color:var(--white);transition:background .25s ease;}
+  .back-top:hover{background:var(--purple);}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:1024px){
+    .about-grid{grid-template-columns:1fr;}
+    .about-media{max-width:420px;}
+    .service-grid{grid-template-columns:repeat(2,1fr);}
+    .work-gallery{grid-template-columns:repeat(2,1fr);}
+    .contact-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width:860px){
+    .nav-links{position:fixed;inset:0 0 0 auto;width:78%;max-width:340px;background:var(--grey-dark);flex-direction:column;align-items:flex-start;justify-content:center;padding:40px;gap:26px;transform:translateX(100%);transition:transform .4s ease;box-shadow:-10px 0 40px rgba(0,0,0,.3);}
+    .nav-links.open{transform:translateX(0);}
+    .hamburger{display:flex;}
+    .nav-cta{margin-top:10px;}
+  }
+  @media (max-width:640px){
+    section{padding:70px 0;}
+    .wrap,.nav-inner,.hero-content{padding:0 20px;}
+    h2{font-size:30px;}
+    .service-grid{grid-template-columns:1fr;}
+    .work-gallery{grid-template-columns:1fr;}
+    .process-row{grid-template-columns:1fr;gap:36px;}
+    .process-row::before{display:none;}
+    .form-row{grid-template-columns:1fr;}
+    .footer-top{flex-direction:column;}
+    .footer-links{gap:32px;}
+    .footer-bottom{flex-direction:column;align-items:flex-start;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001s!important;transition-duration:.001s!important;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= NAV ================= -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#home" class="logo">PRINCE<span>·</span>MEDIA CONCEPT</a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#work">Work</a>
+      <a href="#process">Process</a>
+      <a href="#contact" class="nav-cta">Start a project</a>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="shutter-left"></div>
+  <div class="shutter-right"></div>
+  <div class="hero-content">
+    <p class="eyebrow"><span class="dot"></span> MEDIA PRODUCTION HOUSE</p>
+    <h1 class="hero-title">
+      <span class="line"><span>Stories worth</span></span>
+      <span class="line"><span class="accent">watching.</span></span>
+    </h1>
+    <p class="hero-sub">Prince Media Concept crafts film, photography, brand identity and social content for businesses and creators — wherever they're building. Based in Lagos, working anywhere.</p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn btn-primary">Start a project</a>
+      <a href="#work" class="btn btn-ghost">See our work</a>
+    </div>
+  </div>
+</section>
+
+<div class="film-strip"></div>
+<div class="ticker">
+  <div class="ticker-track">
+    <span>Film Production</span><span>Photography</span><span>Brand Identity</span><span>Social Media Management</span><span>Content Strategy</span><span>Event Coverage</span>
+    <span>Film Production</span><span>Photography</span><span>Brand Identity</span><span>Social Media Management</span><span>Content Strategy</span><span>Event Coverage</span>
+  </div>
+</div>
+<div class="film-strip"></div>
+
+<!-- ================= ABOUT ================= -->
+<section class="about" id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-media reveal">
+        <img src="https://images.unsplash.com/photo-1758873269317-51888e824b28?w=900&q=80&auto=format&fit=crop" alt="Prince Media Concept creative team collaborating in the studio">
+        <div class="about-tag"> WORLDWIDE REACH </div>
+      </div>
+      <div class="about-text">
+        <p class="eyebrow"><span class="dot"></span> REEL 01 — WHO WE ARE</p>
+        <h2 class="reveal">A media house built for brands and creators who won't wait to be discovered.</h2>
+        <p class="reveal reveal-1">Prince Media Concept is a full-service media production house. We plan, shoot, design and publish — turning ideas into film, photography and brand campaigns that hold attention and earn trust.</p>
+        <p class="reveal reveal-2">We work with startups, established businesses, creators and events, on location or remotely, for audiences that don't stop at any one city, country or continent.</p>
+        <div class="pillars reveal reveal-3">
+          <div class="pillar"><span class="ico"></span> Full-service crew</div>
+          <div class="pillar"><span class="ico"></span> Story-first creative</div>
+          <div class="pillar"><span class="ico"></span> Built for global delivery</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SERVICES ================= -->
+<section class="services" id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow"><span class="dot"></span> REEL 02 — WHAT WE DO</p>
+      <h2>Every discipline a modern brand needs, under one roof.</h2>
+      <p class="desc">From first concept to final upload, our crew covers the full production chain so your story never loses momentum between hand-offs.</p>
+    </div>
+    <div class="service-grid">
+      <div class="service-card reveal reveal-1">
+        <p class="service-num">01</p>
+        <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="6" width="15" height="12" rx="2"/><path d="M17 10l5-3v10l-5-3"/></svg>
+        <h3>Film &amp; Video Production</h3>
+        <p>Commercials, brand films, documentaries and social-first video, shot and edited to broadcast standard.</p>
+      </div>
+      <div class="service-card reveal reveal-2">
+        <p class="service-num">02</p>
+        <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="4" width="20" height="16" rx="2"/><circle cx="8" cy="10" r="2"/><path d="M22 16l-5.5-5.5a2 2 0 0 0-2.8 0L4 20"/></svg>
+        <h3>Photography</h3>
+        <p>Studio and on-location photography for products, portraits, events and editorial campaigns.</p>
+      </div>
+      <div class="service-card reveal reveal-3">
+        <p class="service-num">03</p>
+        <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l2.5 5.5L20 10l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-1.5z"/></svg>
+        <h3>Brand Identity &amp; Design</h3>
+        <p>Logos, visual systems and design guidelines that give a brand a consistent, memorable face.</p>
+      </div>
+      <div class="service-card reveal reveal-4">
+        <p class="service-num">04</p>
+        <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="5" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="M8.2 10.8l7.6-4.4M8.2 13.2l7.6 4.4"/></svg>
+        <h3>Social Media Management</h3>
+        <p>Content calendars, community management and platform strategy that keep an audience engaged.</p>
+      </div>
+      <div class="service-card reveal reveal-5">
+        <p class="service-num">05</p>
+        <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20l4-1.2A8 8 0 1 1 12 20a8 8 0 0 1-4.6-1.4z"/><path d="M9 10h6M9 13h4"/></svg>
+        <h3>Content Strategy &amp; Copy</h3>
+        <p>Messaging, scripts and captions built on research — so every piece of content works toward a goal.</p>
+      </div>
+      <div class="service-card reveal reveal-6">
+        <p class="service-num">06</p>
+        <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="7" width="14" height="10" rx="2"/><path d="M16 10l6-3v10l-6-3"/><circle cx="9" cy="12" r="1.4"/></svg>
+        <h3>Event Coverage &amp; Live Streaming</h3>
+        <p>Multi-camera coverage and live streaming for launches, conferences, weddings and concerts.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WORK ================= -->
+<section class="work" id="work">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow"><span class="dot"></span> REEL 03 — SELECTED FRAMES</p>
+      <h2>A glimpse into the crafts we bring to every project.</h2>
+      <p class="desc">A few frames that capture the disciplines we work in — from portraiture to production audio.</p>
+    </div>
+    <div class="work-gallery">
+      <div class="work-item reveal reveal-1">
+        <img src="https://images.unsplash.com/photo-1531299983330-093763e1d963?w=800&q=80&auto=format&fit=crop" alt="Studio portrait photography, dramatic single-source lighting">
+        <div class="work-caption"><span>Photography</span><p>Studio Portraiture</p></div>
+      </div>
+      <div class="work-item reveal reveal-2">
+        <img src="https://images.unsplash.com/photo-1531300185372-b7cbe2eddf0b?w=800&q=80&auto=format&fit=crop" alt="Editorial studio portrait photography">
+        <div class="work-caption"><span>Photography</span><p>Editorial Series</p></div>
+      </div>
+      <div class="work-item reveal reveal-3">
+        <img src="https://images.unsplash.com/photo-1767474365536-ef81bfa24c8a?w=800&q=80&auto=format&fit=crop" alt="Microphone set up in a recording studio for podcast production">
+        <div class="work-caption"><span>Audio</span><p>Podcast &amp; Voice Production</p></div>
+      </div>
+    </div>
+    <p class="work-note reveal">Full portfolio and case studies available on request — get in touch and we'll share our latest reel.</p>
+  </div>
+</section>
+
+<!-- ================= PROCESS ================= -->
+<section class="process" id="process">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow"><span class="dot"></span> REEL 04 — HOW WE WORK</p>
+      <h2>Three stages, one continuous story.</h2>
+      <p class="desc">A simple process that keeps a project moving from idea to finished, published work.</p>
+    </div>
+    <div class="process-row">
+      <div class="process-step reveal reveal-1">
+        <div class="process-num">01</div>
+        <h3>Discover</h3>
+        <p>We learn your brand, audience and goals, then map out the concept, format and timeline.</p>
+      </div>
+      <div class="process-step reveal reveal-2">
+        <div class="process-num">02</div>
+        <h3>Create</h3>
+        <p>Our crew shoots, designs and produces — with check-ins so you're never far from the process.</p>
+      </div>
+      <div class="process-step reveal reveal-3">
+        <div class="process-num">03</div>
+        <h3>Deliver</h3>
+        <p>Final assets are edited, packaged for every platform, and handed over ready to publish.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow"><span class="dot"></span> REEL 05 — LET'S MAKE SOMETHING</p>
+      <h2>Tell us about your project.</h2>
+      <p class="desc">Wherever you're building from, we'd love to hear what you're working on.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <h3>Get in touch</h3>
+        <div class="info-row">
+          <svg class="info-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <div><span><b>Office</span><p>Ikeja | Ajah | Lagos-Nigeria</p></div>
+        </div>
+        <div class="info-row">
+          <svg class="info-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.5 2.1L8 9.7a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.7 2z"/></svg>
+          <div><span>Phone &amp; WhatsApp</span><a href="https://wa.me/2347065157614" target="_blank" rel="noopener">0706 515 7614</a></div>
+        </div>
+        <div class="info-row">
+          <svg class="info-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 6l10 7L22 6"/></svg>
+          <div><span>Email</span><a href="mailto:princemediaconcept@gmail.com">princemediaconcept@gmail.com</a></div>
+        </div>
+        <div class="social-row">
+          <a href="https://instagram.com/princemedia_concepts" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+          </a>
+          <a href="https://youtube.com/@princemedia_concepts" target="_blank" rel="noopener" aria-label="YouTube">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l6 3-6 3z" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="https://facebook.com/princemedia_concepts" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M15 8h2V4h-2a4 4 0 0 0-4 4v2H9v4h2v6h4v-6h2.5l.5-4H15V8z"/></svg>
+          </a>
+          <a href="https://wa.me/2347065157614" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 12a9 9 0 1 1-4-7.5"/><path d="M13 8a3 3 0 0 0 3 3M8 8s.5 3 2 4.5S13 15 13 15"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <form class="contact-form reveal reveal-2" id="contactForm">
+        <div class="form-row">
+          <div class="field"><label for="name">Full name</label><input type="text" id="name" required placeholder="Your name"></div>
+          <div class="field"><label for="email">Email</label><input type="email" id="email" required placeholder="you@email.com"></div>
+        </div>
+        <div class="form-row">
+          <div class="field full"><label for="ptype">Project type</label>
+            <select id="ptype">
+              <option>Film &amp; Video Production</option>
+              <option>Photography</option>
+              <option>Brand Identity &amp; Design</option>
+              <option>Social Media Management</option>
+              <option>Content Strategy &amp; Copy</option>
+              <option>Event Coverage &amp; Live Streaming</option>
+              <option>Something else</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field full"><label for="msg">Tell us about your project</label><textarea id="msg" required placeholder="Share a few details — goals, timeline, location..."></textarea></div>
+        </div>
+        <button type="submit" class="form-submit">Send message</button>
+        <p class="form-note">This opens your email app with the details pre-filled — or reach us faster on WhatsApp above.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#home" class="logo">PRINCE<span>·</span>MEDIA CONCEPT</a>
+        <p>A media production house crafting film, photography and brand campaigns for clients everywhere.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Navigate</h4>
+          <a href="#about">About</a>
+          <a href="#services">Services</a>
+          <a href="#work">Work</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <p>Ikeja &amp; Ajah, Lagos</p>
+          <a href="tel:+2347065157614">0706 515 7614</a>
+          <a href="mailto:princemediaconcept@gmail.com">princemediaconcept@gmail.com</a>
+        </div>
+        <div class="footer-col">
+          <h4>Follow</h4>
+          <a href="https://instagram.com/princemedia_concepts" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://youtube.com/@princemedia_concepts" target="_blank" rel="noopener">YouTube</a>
+          <a href="https://facebook.com/princemedia_concepts" target="_blank" rel="noopener">Facebook</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="year"></span> Prince Media Concept. All rights reserved.</p>
+      <a href="#home" class="back-top" aria-label="Back to top">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Shutter reveal on load
+  window.addEventListener('load', () => {
+    document.querySelector('.hero').classList.add('shutter-open');
+  });
+
+  // Nav shrink on scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // Mobile menu
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    navLinks.classList.remove('open');
+  }));
+
+  // Scroll reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Contact form -> mailto
+  document.getElementById('contactForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const ptype = document.getElementById('ptype').value;
+    const msg = document.getElementById('msg').value;
+    const subject = encodeURIComponent('New project inquiry: ' + ptype);
+    const body = encodeURIComponent(
+      'Name: ' + name + '\nEmail: ' + email + '\nProject type: ' + ptype + '\n\nMessage:\n' + msg
+    );
+    window.location.href = 'mailto:princemediaconcept@gmail.com?subject=' + subject + '&body=' + body;
+  });
+</script>
+
+</body>
+</html>
